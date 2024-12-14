@@ -25,3 +25,19 @@ Enables fast and responsive UI development with utility-first CSS classes.
 Provides pre-designed components for a consistent and professional design aesthetic.
 
 
+
+
+Key Features
+
+User Authentication
+
+Register: Users can sign up with a username, email, password, and avatar. The avatar is uploaded to Cloudinary during registration.
+
+Login: Users log in using their username and password, receiving access and refresh tokens for session management.
+
+Logout: Secure logout functionality clears authentication cookies and refresh tokens.
+
+Change Password: Enables users to change their password by validating the old password.
+
+Refresh Token: Keeps user sessions active by issuing new access tokens using refresh tokens.
+
