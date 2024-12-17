@@ -8,6 +8,8 @@ const initialState = {
   refreshtoken :localStorage.getItem("token") || "",
   data: localStorage.getItem("data") || {},
   protected:false,
+  addToCartItems :[],
+  accessToken:null,
 
 };
 
@@ -40,14 +42,14 @@ export const loginUser = createAsyncThunk(
 
       await toast.promise(responsePromise, {
         loading: "Wait! Logging into the app...",
-        success: (res) => res.data.message || "Login successful!",
+        success: (res) => res.data.message,
         error: "Failed to login",
       });
 
       const res = await responsePromise;
       return res.data;
     } catch (error) {
-      toast.error("Unable to log in");
+   
       return thunkAPI.rejectWithValue(error.response?.data || "Unknown error");
     }
   }
@@ -55,13 +57,33 @@ export const loginUser = createAsyncThunk(
 
 export const logout = createAsyncThunk('/auth/logout',async ()=>{
 try {
-  const response =  axiosInstance.post('/users/logout',{});
+  console.log("Entered to logout field");
+  
+ const response= await axiosInstance.post('/users/logout');
   
   await toast.promise(response, {
     loading: "Wait! Loggouting....",
-    success: (res) => res.data.message || "Logout successfully",
+    success: (data) => data?.data?.message,
     error: "Failed to Logout",
   });
+
+  return response.data;
+
+
+} catch (error) {
+  toast.error(error?.response?.data?.message);
+}
+})
+
+export const addToCart = createAsyncThunk('/auth/addtocart',async ({productId,quantity})=>{
+try {
+  const response = axiosInstance.post('/users/add-to-cart',{productId,quantity});
+  toast.promise(response,{
+    loading:"Product adding to the cart",
+    success:"Product Added successfully",
+    error:"Unable to add items to the cart",
+  })
+  
 } catch (error) {
   toast.error(error?.response?.data?.message);
 }
@@ -74,13 +96,19 @@ const authSlice = createSlice({
   extraReducers:(builder)=>{
     builder.addCase(loginUser.fulfilled ,(state,action)=>{
         localStorage.setItem("Token",JSON.stringify(action.payload.data?.accessToken));
+        localStorage.setItem("isLoggedIn", JSON.stringify(true));
         state.protected = true;
+        state.isLoggedIn=true;
+        state.accessToken= action.payload?.data?.accessToken;
    
     })
     .addCase(logout.fulfilled,(state,action)=>{
       localStorage.setItem("Token","");
+      localStorage.setItem("isLoggedIn", JSON.stringify(false));
       state.refreshtoken = null;
       state.protected = false;
+      state.isLoggedIn=false;
+      state.accessToken=null;
    
     })
   }

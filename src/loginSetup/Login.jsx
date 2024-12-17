@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../redux/slices/AuthSlice";
 import loginImage from "../assets/images/LoginNewImage.png";
 
@@ -15,6 +15,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState(initialState);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,26 +30,25 @@ const Login = () => {
     e.preventDefault();
 
     if (!email || !username || !password) {
-      toast.error("All fields required");
+    return  toast.error("All fields required");
     }
 
 
     const response =await dispatch(loginUser(loginData));
 
     console.log("login response",response);
-    
-
+  
     if (response.payload.success) {
-      toast.success("Logged in successfully!");
+  
       navigate("/");
+      // console.log("accessToken",accessToken);
+      
       setLoginData(initialState);
-    } else {
-      toast.error(response.payload.message || "Login failed");
     }
   };
 
   return (
-    <div className="w-[100%] h-[100%] fixed flex">
+    <div className="w-[100%] h-[100%] fixed flex ">
       <div className="w-[60%] h-[100%] hidden md:block ">
         <img src={loginImage} alt="" className="h-[100vh] w-[100%]" />
       </div>
@@ -108,9 +108,11 @@ const Login = () => {
           type="submit"
           className="bg-black text-white cursor-pointer text-[13px] font-semibold p-2 px-3 rounded-md w-fit float-left hover:scale-105 my-3 flex justify-center gap-3"
         >
-          Login<i class="bi bi-arrow-right-circle-fill"></i>
+          Login
         </button>
+        <span>Dont have a account? <Link to={'/register'} className="text-zinc-600 font-sm">Register</Link></span>
       </form>
+ 
     </div>
   );
 };

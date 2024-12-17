@@ -4,8 +4,10 @@ import Register from "./loginSetup/Register.jsx";
 import Login from "./loginSetup/Login.jsx";
 import Layout from "./layouts/Layout.jsx";
 import { Toaster } from "react-hot-toast";
-import { useSelector } from "react-redux";
+
 import { Courses, Home } from "./pages/index.js";
+import CourseDescription from "./components/CourseDescription.jsx";
+import { useSelector } from "react-redux";
 
 export const routes = [
   {
@@ -13,30 +15,43 @@ export const routes = [
     element: <Layout />,
     protected: false,
     children: [
-      { index: true, element: <Home />, protected: false }, 
-      { path: "courses", element: <Courses />, protected: true }, 
+      { index: true, element: <Home />, protected: false },
+      { path: "courses", element: <Courses />, protected: true },
+      {
+        path: "/courses/description",
+        element: <CourseDescription />,
+        protected: true,
+      },
+      ,
     ],
   },
   { path: "/register", element: <Register />, protected: false },
   { path: "/login", element: <Login />, protected: false },
 ];
 
-
 const ProtectedRoute = ({ isProtected, children }) => {
-  const isAuthenticated = useSelector((state) => state.auth.protected);
+  const { accessToken } = useSelector((state) => state.auth);
 
-  if (isProtected && !isAuthenticated) {
- 
+
+if(accessToken){
+  console.log("Access Token is there",accessToken);
+  
+}else{
+  console.log("Not there",accessToken);
+  
+}
+  
+
+  if (isProtected && !accessToken) {
     return <Navigate to="/login" replace />;
   }
   return children;
 };
 
-
 export default function App() {
   return (
     <Suspense fallback={<div>Welcome to LMS System!! Loading...</div>}>
-      <Toaster />
+      <Toaster position="top-right" reverseOrder={true} />
 
       <Routes>
         {routes.map((route, index) => (
@@ -65,7 +80,6 @@ export default function App() {
           </Route>
         ))}
 
-       
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>

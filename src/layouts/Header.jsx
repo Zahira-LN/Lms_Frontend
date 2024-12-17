@@ -6,19 +6,18 @@ import { logout } from "../redux/slices/AuthSlice";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.auth.protected);
+  const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
 
   const handleLogout = () => {
-    dispatch(logout({}));
+    dispatch(logout());
     navigate("/login");
   };
-  console.log(JSON.stringify(localStorage.getItem("Token")));
 
   return (
-    <div className="bg-black h-16 flex justify-between items-center p-2">
-      <div className="text-white text-[20px] font-semibold">LMS System</div>
+    <div className="bg-black h-16 flex justify-between items-center p-2 font-monsterrtate">
+      <div className="text-white text-[20px] font-semibold font-monsterrtate">LMS System</div>
       <ul className="flex gap-2 justify-center items-center list-none">
-       {!isAuthenticated ? (
+       {!isLoggedIn ? (
         <>
           <Link to={"/login"}>
             <li className="bg-white rounded px-2 py-1 text-black font-semibold text-[13px]">

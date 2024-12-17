@@ -5,14 +5,15 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-900 text-gray-300 py-10 px-4">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 font-notosans">
+
         {/* Logo and Description */}
         <div>
           <div className="flex items-center mb-4">
-            <div className="bg-blue-500 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xl">
+            <div className="bg-blue-500 w-16 h-12 rounded-full flex items-center justify-center text-white font-bold text-[18px]">
               LMS
             </div>
-            <span className="ml-2 text-lg font-semibold">
+            <span className="ml-2 text-lg font-semibold font-monsterrtate">
               Learning Management System
             </span>
           </div>
@@ -26,7 +27,7 @@ const Footer = () => {
 
         {/* Get Help */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Get Help</h3>
+          <h3 className="text-lg font-semibold mb-4 font-monsterrtate">Get Help</h3>
           <ul className="space-y-2 text-sm">
             <li>Contact Us</li>
             <li>Latest Articles</li>
@@ -36,7 +37,7 @@ const Footer = () => {
 
         {/* Programs */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Programs</h3>
+          <h3 className="text-lg font-semibold mb-4 font-monsterrtate">Programs</h3>
           <ul className="space-y-2 text-sm">
             <li>Art & Design</li>
             <li>Business</li>
@@ -48,7 +49,7 @@ const Footer = () => {
 
         {/* Contact Us */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+          <h3 className="text-lg font-semibold mb-4 font-monsterrtate">Contact Us</h3>
           <p className="text-sm">
             Address: 123 Main Street, Anytown, Karnataka
           </p>
